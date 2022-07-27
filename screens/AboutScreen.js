@@ -1,5 +1,5 @@
 import { Avatar, Card, ListItem } from "react-native-elements";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView, Text } from 'react-native';
 import { PARTNERS } from "../shared/partners";
 
 const AboutScreen = () => {
@@ -21,14 +21,16 @@ const Mission = () => {
       <Card>
         <Card.title>Community Partners</Card.title>
         <Card.Divider />
-        {PARTNERS.map(partner) {
+        {PARTNERS.map((partner) => {
+          <>
           <ListItem key={partner.id} />
             <Avatar rounded source={partner.image} />
             <ListItem.Content>
-              <ListItem.Title>partner.name</ListItem.Title>
-              <ListItem.Subtitle>partner.description</ListItem.Subtitle>
+              <ListItem.Title>{partner.name}</ListItem.Title>
+              <ListItem.Subtitle>{partner.description}</ListItem.Subtitle>
             </ListItem.Content>
-        }
+          </>
+        })
         };
       </Card>
     </ScrollView>
