@@ -4,9 +4,10 @@ import { PARTNERS } from "../shared/partners";
 
 const AboutScreen = () => {
 
-const [partners, setPartners] = useState(PARTNERS);
+
 
 const Mission = () => {
+const [partners, setPartners] = useState(PARTNERS);
   <Card>
     <Card.Title>Our Mission</Card.Title>
     <Card.Divider />
