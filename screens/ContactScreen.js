@@ -1,4 +1,5 @@
-import { ScrollView } from "react-native-gesture-handler"
+import { ScrollView } from "react-native-gesture-handler";
+import { Card, Text } from 'react-native';
 
 const ContactScreen = () => {
   return (
