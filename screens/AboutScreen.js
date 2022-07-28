@@ -1,4 +1,4 @@
-import { Card } from 'react-native-elements';
+import { Avatar, Card, ListItem } from "react-native-elements";
 import { ScrollView, Text } from 'react-native';
 import { PARTNERS } from "../shared/partners";
 import { useState } from 'react';
