@@ -34,7 +34,7 @@ const AboutScreen = () => {
               </ListItem.Content>
             </ListItem>
             )
-        })};
+        })}
 
         {partners.map((partner) => {
           return (
@@ -46,7 +46,7 @@ const AboutScreen = () => {
               </ListItem.Content>
             </ListItem>
             )
-        })};
+        })}
       </Card>
     </ScrollView>
   );
