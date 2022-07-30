@@ -1,44 +1,43 @@
-import { Avatar, Card, ListItem } from "react-native-elements";
-import { ScrollView, Text } from 'react-native';
+import { FlatList, Text, View } from 'react-native';
+import { Tile } from 'react-native-elements';
 import { useSelector } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
+import Loading from '../components/LoadingComponent';
 
+const DirectoryScreen = ({ navigation }) => {
+    const campsites = useSelector((state) => state.campsites);
 
-const Mission = () => {
-  return (
-    <Card>
-      <Card.Title>
-        Our Mission
-      </Card.Title>
-      <Card.Divider />
-      <Text style={{margin: 10}}>We present a curated database of the best campsites in the vast woods and backcountry of the World Wide Web Wilderness. We increase access to adventure for the public while promoting safe and respectful use of resources. The expert wilderness trekkers on our staff personally verify each campsite to make sure that they are up to our standards. We also present a platform for campers to share reviews on campsites they have visited with each other.
-      </Text>
-    </Card>
-  )
+    if (campsites.isLoading) {
+        return <Loading />;
+    }
+    if (campsites.errMess) {
+        return (
+            <View>
+                <Text>{campsites.errMess}</Text>
+            </View>
+        );
+    }
+
+    const renderDirectoryItem = ({ item: campsite }) => {
+        return (
+            <Tile
+                title={campsite.name}
+                caption={campsite.description}
+                featured
+                onPress={() =>
+                    navigation.navigate('CampsiteInfo', { campsite })
+                }
+                imageSrc={{ uri: baseUrl + campsite.image }}
+            />
+        );
+    };
+    return (
+        <FlatList
+            data={campsites.campsitesArray}
+            renderItem={renderDirectoryItem}
+            keyExtractor={(item) => item.id.toString()}
+        />
+    );
 };
 
-const AboutScreen = () => {
-  const [partners, setPartners] = useState(PARTNERS);
-  return (
-    <ScrollView>
-      <Mission />
-      <Card>
-        <Card.Title>Community Partners</Card.Title>
-        <Card.Divider />
-        {partners.map((partner) => {
-          return (
-            <ListItem key={partner.id}>
-              <Avatar rounded source={partner.image} />
-              <ListItem.Content>
-                <ListItem.Title>{partner.name}</ListItem.Title>
-                <ListItem.Subtitle>{partner.description}</ListItem.Subtitle>
-              </ListItem.Content>
-            </ListItem>
-            )
-        })}
-      </Card>
-    </ScrollView>
-  );
-};
-
-export default AboutScreen
+export default DirectoryScreen;

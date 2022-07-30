@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { Button, Modal, FlatList, StyleSheet, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import RenderCampsite from '../features/campsites/RenderCampsite';
 
 const CampsiteInfoScreen = ({ route }) => {
     const { campsite } = route.params;
     const comments = useSelector((state) => state.comments);
-
+    const [showModal, setShowModal] = useState(false);
     const [favorite, setFavorite] = useState(false);
 
     const renderCommentItem = ({ item }) => {
@@ -22,6 +22,7 @@ const CampsiteInfoScreen = ({ route }) => {
     };
 
     return (
+      <>
         <FlatList
             data={comments.commentsArray.filter(
                 (comment) => comment.campsiteId === campsite.id
@@ -38,11 +39,32 @@ const CampsiteInfoScreen = ({ route }) => {
                         campsite={campsite}
                         isFavorite={favorite}
                         markFavorite={() => setFavorite(true)}
+                        onShowModal={() => setShowModal(!showModal)}
                     />
+                    
                     <Text style={styles.commentsTitle}>Comments</Text>
                 </>
             }
         />
+        <Modal
+                animationType='slide'
+                transparent={false}
+                visible={showModal}
+                onRequestClose={() => setShowModal(!showModal)}
+            >
+              <View>
+                <View style={{margin: 10}}>
+                  <Button 
+                    onPress={setShowModal(!showModal)}
+                    color={'#808080'}
+                    title='Cancel'
+                  >
+
+                  </Button>
+                </View>
+              </View>
+            </Modal>
+      </> 
     );
 };
 
@@ -60,7 +82,12 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 20,
         backgroundColor: '#fff'
+    },
+    modal: {
+      justifyContent: 'center',
+      margin: 20
     }
+
 });
 
 export default CampsiteInfoScreen;
