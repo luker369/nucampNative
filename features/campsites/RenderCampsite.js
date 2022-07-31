@@ -15,7 +15,7 @@ const RenderCampsite = (props) => {
                     </View>
                 </Card.Image>
                 <Text style={{ margin: 20 }}>{campsite.description}</Text>
-                <View style={styles.cardRow>}
+                <View style={styles.cardRow}>
                     <Icon
                         name={props.isFavorite ? 'heart' : 'heart-o'}
                         type='font-awesome'
@@ -48,15 +48,15 @@ const styles = StyleSheet.create({
         padding: 0,
         margin: 0,
         marginBottom: 20
-    }
+    },
     cardRow: {
         alignItems: 'center',
         justifyContent: 'center',
         flex: 1,
         flexDirection: 'row',
         margin: 20
-    }     
-    cardText {
+    },     
+    cardText: {
         textShadowColor: 'rgba(0, 0, 0, 1)',
         textShadowOffset: { width: -1, height: 1 },
         textShadowRadius: 20,
