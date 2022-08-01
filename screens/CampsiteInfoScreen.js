@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button, Modal, FlatList, StyleSheet, Text, View } from 'react-native';
-import { useSelector } from 'react-redux';
+import { Input, Rating } from 'react-native-elements';
 import RenderCampsite from '../features/campsites/RenderCampsite';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleFavorite } from '../features/favorites/favoritesSlice';
@@ -99,20 +99,20 @@ const CampsiteInfoScreen = ({ route }) => {
                   <Input>
                     <Text 
                       placeholder={'Author'}
-                      leftIcon={user-o}
+                      leftIcon={{ type: 'font-awesome', name: 'user-o' }}
                       leftIconContainerStyle={{paddingRight: 10}}
-                      onChangeText={rating}
-                      value={value}>
+                      onChangeText={(rating)=> setRating(rating)}
+                      value={'Author'}>
 
                     </Text>
                   </Input>
                   <Input>
                   <Text 
                       placeholder={'Comment'}
-                      leftIcon={comment-o}
+                      leftIcon={{ type: 'font-awesome', name: 'comment-o' }}
                       leftIconContainerStyle={{paddingRight: 10}}
-                      onChangeText={rating}
-                      value={value}>
+                      onChangeText={(rating)=> setRating(rating)}
+                      value={'Comment'}>
                     </Text>
                   </Input>
                   <Button></Button>
