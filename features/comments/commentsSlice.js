@@ -12,7 +12,17 @@ export const fetchComments = createAsyncThunk(
 const commentsSlice = createSlice({
     name: 'comments',
     initialState: { isLoading: true, errMess: null, commentsArray: [] },
-    reducers: {},
+    reducers: {
+      addComment: (state, action) => {
+        if (state.includes(action.payload)) {
+            return state.filter(
+                (favorite) => favorite !== action.payload
+            );
+        } else {
+            state.push(action.payload);
+        }
+    }
+    },
     extraReducers: {
         [fetchComments.pending]: (state) => {
             state.isLoading = true;
