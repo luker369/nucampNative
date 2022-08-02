@@ -4,12 +4,14 @@ import { Input, Rating } from 'react-native-elements';
 import RenderCampsite from '../features/campsites/RenderCampsite';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleFavorite } from '../features/favorites/favoritesSlice';
+import { postComment } from '../features/comments/commentsSlice';
+
 
 const CampsiteInfoScreen = ({ route }) => {
     const { campsite } = route.params;
     const comments = useSelector((state) => state.comments);
+    const favorites = useSelector((state) => state.favorites);
     const [showModal, setShowModal] = useState(false);
-    const [favorite, setFavorite] = useState(false);
     const [rating, setRating] = useState(5);
     const [author, setAuthor] = useState('');
     const [text, setText] = useState('');
@@ -22,16 +24,18 @@ const CampsiteInfoScreen = ({ route }) => {
         rating,
         text,
         campsiteId: campsite.id
+        
       }
       console.log({newComment})
       setShowModal(!showModal)
-    }
+    };
+
     const resetForm = () => {
-      setRating(5)
-      setAuthor('')
-      setTitle('')
-      
-    }
+      setRating(5);
+      setAuthor('');
+      setText('');
+    };
+
     const renderCommentItem = ({ item }) => {
       return (
         <View style={styles.commentItem}>
@@ -43,7 +47,7 @@ const CampsiteInfoScreen = ({ route }) => {
               }} 
             startingValue={rating}
             imageSize={10}
-            readonly={true}
+            read-only={true}
             >
             {item.text}           
           </Rating>
@@ -52,7 +56,7 @@ const CampsiteInfoScreen = ({ route }) => {
             {`-- ${item.author}, ${item.date}`}
           </Text>
         </View>
-      );
+      )
     };
 
     return (
@@ -81,14 +85,13 @@ const CampsiteInfoScreen = ({ route }) => {
             }
         />
         <Modal
-                animationType='slide'
-                transparent={false}
-                visible={showModal}
-                onRequestClose={() => setShowModal(!showModal)}
-            >
-            
+          animationType='slide'
+          transparent={false}
+          visible={showModal}
+          onRequestClose={() => setShowModal(!showModal)}
+      >
 
-              <View>
+              <View style={styles.modal}>
                 <Rating 
                   showRating={true}
                   startingValue={setRating}
@@ -103,7 +106,6 @@ const CampsiteInfoScreen = ({ route }) => {
                       leftIconContainerStyle={{paddingRight: 10}}
                       onChangeText={(rating)=> setRating(rating)}
                       value={'Author'}>
-
                     </Text>
                   </Input>
                   <Input>
