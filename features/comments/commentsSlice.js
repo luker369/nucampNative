@@ -16,7 +16,7 @@ const commentsSlice = createSlice({
       addComment: (state, action) => {
         if (state.includes(action.payload)) {
             return state.filter(
-                (favorite) => favorite !== action.payload
+                (comment) => comment !== action.payload
             );
         } else {
             state.push(action.payload);
@@ -39,4 +39,14 @@ const commentsSlice = createSlice({
     }
 });
 
+createAsyncThunk(
+  'comments/postComment',
+  async (payload, { dispatch, getState }) => {
+    setTimeout(() => {
+      const { comments } = getState();
+    }, 2000);
+  }
+)
+
 export const commentsReducer = commentsSlice.reducer;
+export const { addComment } = commentsSlice.actions;
