@@ -26,7 +26,7 @@ const CampsiteInfoScreen = ({ route }) => {
         campsiteId: campsite.id
         
       }
-      console.log({newComment})
+      dispatch(postComment(newComment))
       setShowModal(!showModal)
     };
 

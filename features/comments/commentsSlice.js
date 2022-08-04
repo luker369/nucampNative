@@ -43,7 +43,10 @@ createAsyncThunk(
   'comments/postComment',
   async (payload, { dispatch, getState }) => {
     setTimeout(() => {
-      const { comments } = getState();
+      const { comments } = getState()
+      date={Date.toISOString()}
+      id={comments.commentsArray.length()}
+      dispatch={addComment(payload)}
     }, 2000);
   }
 )
