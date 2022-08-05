@@ -39,13 +39,15 @@ const commentsSlice = createSlice({
     }
 });
 
-createAsyncThunk(
+ const postComment = createAsyncThunk(
   'comments/postComment',
-  async (payload, { dispatch, getState }) => {
+  async(payload, { dispatch, getState }) => {
     setTimeout(() => {
+      const date = new Date()
       const { comments } = getState()
-      date={Date.toISOString()}
-      id={comments.commentsArray.length()}
+      console.log("I'm the payload" , payload)
+      date=(date.toISOString())
+      payload.id={comments.commentsArray.length()}
       dispatch={addComment(payload)}
     }, 2000);
   }
