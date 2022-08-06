@@ -14,14 +14,8 @@ const commentsSlice = createSlice({
     initialState: { isLoading: true, errMess: null, commentsArray: [] },
     reducers: {
       addComment: (state, action) => {
-        if (state.includes(action.payload)) {
-            return state.filter(
-                (comment) => comment !== action.payload
-            );
-        } else {
-            state.push(action.payload);
-        }
-    }
+        state.commentsArray.push(action.payload);
+      }
     },
     extraReducers: {
         [fetchComments.pending]: (state) => {
@@ -39,16 +33,14 @@ const commentsSlice = createSlice({
     }
 });
 
- const postComment = createAsyncThunk(
+export const postComment = createAsyncThunk(
   'comments/postComment',
   async(payload, { dispatch, getState }) => {
     setTimeout(() => {
-      const date = new Date()
       const { comments } = getState()
-      console.log("I'm the payload" , payload)
-      date=(date.toISOString())
-      payload.id={comments.commentsArray.length()}
-      dispatch={addComment(payload)}
+      payload.date = new Date().toISOString()
+      payload.id = comments.commentsArray.length
+      dispatch(addComment(payload));
     }, 2000);
   }
 )
