@@ -41,6 +41,24 @@ const ReservationScreen = () => {
         setShowCalendar(false);
     };
 
+    const createTwoButtonAlert = () => {
+      Alert.alert(
+        // "Begin Search",
+        // "Number of campers: " + `${campers}`,
+        // "Hike-In: " + `${hikeIn}`,
+        // "Date: " + `${date}`
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+          },
+          { text: "OK", onPress: () => console.log("OK Pressed") }
+        ]
+      )}
+
+
+
     return (
         <ScrollView>
           <Animatable.View
@@ -92,20 +110,7 @@ const ReservationScreen = () => {
               )}
               <View style={styles.formRow}>
                   <Button
-                       
-                        const createTwoButtonAlert = () =>
-                          Alert.alert(
-                            "Alert Title",
-                            "My Alert Msg",
-                            [
-                              {
-                                text: "Cancel",
-                                onPress: () => console.log("Cancel Pressed"),
-                                style: "cancel"
-                              },
-                              { text: "OK", onPress: () => console.log("OK Pressed") }
-                            ]
-                          )}
+                      onPress={createTwoButtonAlert}                        
                       title='Search Availability'
                       color='#5637DD'
                       accessibilityLabel='Tap me to search for available campsites to reserve'
@@ -116,7 +121,7 @@ const ReservationScreen = () => {
     );
 };
 
-const styles = StyleSheet.create({
+ const styles = StyleSheet.create({
     formRow: {
         alignItems: 'center',
         justifyContent: 'center',
