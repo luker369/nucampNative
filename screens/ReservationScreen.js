@@ -43,10 +43,10 @@ const ReservationScreen = () => {
 
     const createTwoButtonAlert = () => {
       Alert.alert(
-        // "Begin Search",
-        // "Number of campers: " + `${campers}`,
-        // "Hike-In: " + `${hikeIn}`,
-        // "Date: " + `${date}`
+        "Begin Search",
+        "Number of campers: " + {campers},
+        "Hike-In: " + {hikeIn},
+        "Date: " + {date}
         [
           {
             text: "Cancel",
