@@ -27,12 +27,7 @@ const ReservationScreen = () => {
         setDate(currentDate);
     };
 
-    const handleReservation = () => {
-        console.log('campers:', campers);
-        console.log('hikeIn:', hikeIn);
-        console.log('date:', date);
-        
-    };
+    
 
     const resetForm = () => {
         setCampers(1);
@@ -41,19 +36,27 @@ const ReservationScreen = () => {
         setShowCalendar(false);
     };
 
-    const createTwoButtonAlert = () => {
+    const handleReservation = () => { 
+      const message = `Number of Campers: ${campers}
+                  \nHike-In? ${hikeIn}
+                  \nDate: ${date.toLocaleDateString('en-US')}`;      
       Alert.alert(
-        "Begin Search",
-        "Number of campers: " + {campers},
-        "Hike-In: " + {hikeIn},
-        "Date: " + {date}
+        "Begin Search?",
+        message,
         [
           {
             text: "Cancel",
-            onPress: () => console.log("Cancel Pressed"),
-            style: "cancel"
+            onPress: () => {
+              console.log("Cancel Pressed");
+              resetForm()
+              },
+            style: "cancel" 
           },
-          { text: "OK", onPress: () => console.log("OK Pressed") }
+          { text: "OK",
+            onPress: () => {
+              console.log("OK Pressed");
+              resetForm()
+            } }
         ]
       )}
 
@@ -110,7 +113,7 @@ const ReservationScreen = () => {
               )}
               <View style={styles.formRow}>
                   <Button
-                      onPress={createTwoButtonAlert}                        
+                      onPress={() => {handleReservation()}}                        
                       title='Search Availability'
                       color='#5637DD'
                       accessibilityLabel='Tap me to search for available campsites to reserve'
