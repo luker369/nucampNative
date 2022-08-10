@@ -48,8 +48,11 @@ const RenderCampsite = (props) => {
                     { cancelable: false }
                 );
             }
-            if (isRightSwipe(gestureState)) {
-                <CampsiteInfoScreen />
+            else if (isRightSwipe(gestureState)) {
+                <View>
+                    <CampsiteInfoScreen />
+                </View>
+                
             }
         }
     });
