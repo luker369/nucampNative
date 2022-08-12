@@ -5,7 +5,9 @@ import { useSelector } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
 import Loading from '../components/LoadingComponent';
 
+
 const FeaturedItem = (props) => {
+    console.log("props", props)
     const { item } = props;
 
     if (props.isLoading) {
@@ -21,7 +23,7 @@ const FeaturedItem = (props) => {
     if (item) {
         return (
             <Card containerStyle={{ padding: 0 }}>
-                <Card.Image source={{ url: baseUrl + item.image }}>
+                <Card.Image source={{ uri: baseUrl + item.image }}>
                     <View style={{ justifyContent: 'center', flex: 1 }}>
                         <Text
                             style={{
