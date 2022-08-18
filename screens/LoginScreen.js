@@ -1,14 +1,18 @@
 import { useEffect, useState } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView, Image } from 'react-native';
 import { CheckBox, Input, Button, Icon } from 'react-native-elements';
 import * as SecureStore from 'expo-secure-store';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import * as ImagePicker from 'expo-image-picker';
+import { baseUrl } from '../shared/baseUrl';
+import logo from '../assets/images/logo.png';
+import * as ImageManipulator from 'expo-image-manipulator';
+
 
 const LoginTab = ({ navigation }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [remember, setRemember] = useState(false);
-
     const handleLogin = () => {
         console.log('username:', username);
         console.log('password:', password);
@@ -27,7 +31,6 @@ const LoginTab = ({ navigation }) => {
             );
         }
     };
-
     useEffect(() => {
         SecureStore.getItemAsync('userinfo').then((userdata) => {
             const userinfo = JSON.parse(userdata);
@@ -38,7 +41,6 @@ const LoginTab = ({ navigation }) => {
             }
         });
     }, []);
-
     return (
         <View style={styles.container}>
             <Input
@@ -99,7 +101,6 @@ const LoginTab = ({ navigation }) => {
         </View>
     );
 };
-
 const RegisterTab = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -107,7 +108,7 @@ const RegisterTab = () => {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [remember, setRemember] = useState(false);
-
+    const [imageUrl, setImageUrl] = useState(baseUrl + 'images/logo.png');
     const handleRegister = () => {
         const userInfo = {
             username,
@@ -132,10 +133,40 @@ const RegisterTab = () => {
             );
         }
     };
+    const getImageFromCamera = async () => {
+        const cameraPermission =
+            await ImagePicker.requestCameraPermissionsAsync();
+        if (cameraPermission.status === 'granted') {
+            const capturedImage = await ImagePicker.launchCameraAsync({
+                allowsEditing: true,
+                aspect: [1, 1]
+            });
+            if (!capturedImage.cancelled) {
+                console.log(capturedImage);
+                processImage(capturedImage.uri);
+            }
+        }
+    };
 
+    const processImage = async (imgUri) => {
+        let processedImage = await ImageManipulator.manipulateAsync();
+        console.log(processedImage)
+        const [imageUri, setImageUri] = processedImage.uri;
+       
+        // SaveFormat.PNG ＝ "png"
+    };
+    
     return (
         <ScrollView>
             <View style={styles.container}>
+                <View style={styles.imageContainer}>
+                    <Image
+                        source={{ uri: imageUrl }}
+                        loadingIndicatorSource={logo}
+                        style={styles.image}
+                    />
+                    <Button title='Camera' onPress={getImageFromCamera} />
+                </View>
                 <Input
                     placeholder='Username'
                     leftIcon={{ type: 'font-awesome', name: 'user-o' }}
@@ -203,23 +234,7 @@ const RegisterTab = () => {
         </ScrollView>
     );
 };
-
-const getImageFromCamera = async () => {
-    processImage(capturedImage.uri)
-}
-
-const processImage = async (imgUri) => {
-    let processedImage = await ImageManipulator.manipulateAsync(
-        imgUri,
-        [{width: 400}],
-        { compress: 1, format: SaveFormat.PNG }
-    );
-    console.log("process image ", processedImage)
-    setImageUrl(processedImage.uri)
-  }
-
 const Tab = createBottomTabNavigator();
-
 const LoginScreen = () => {
     const tabBarOptions = {
         activeBackgroundColor: '#5637DD',
@@ -228,7 +243,6 @@ const LoginScreen = () => {
         inactiveTintColor: '#808080',
         labelStyle: { fontSize: 16 }
     };
-
     return (
         <Tab.Navigator tabBarOptions={tabBarOptions}>
             <Tab.Screen
@@ -264,7 +278,6 @@ const LoginScreen = () => {
         </Tab.Navigator>
     );
 };
-
 const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
@@ -285,7 +298,17 @@ const styles = StyleSheet.create({
         margin: 20,
         marginRight: 40,
         marginLeft: 40
+    },
+    imageContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        margin: 10
+    },
+    image: {
+        width: 60,
+        height: 60
     }
 });
-
 export default LoginScreen;
